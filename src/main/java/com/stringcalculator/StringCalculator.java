@@ -1,5 +1,10 @@
 package com.stringcalculator;
 
+import static com.stringcalculator.StringUtils.after;
+import static com.stringcalculator.StringUtils.asInt;
+import static com.stringcalculator.StringUtils.before;
+import static com.stringcalculator.StringUtils.between;
+
 public class StringCalculator {
 
 	private static final String SEPARATOR_STOP = "\n";
@@ -13,6 +18,11 @@ public class StringCalculator {
 		String sumString = getSumString(operation);
 
 		return add(sumString, separators);
+	}
+
+	private String[] getSeparators(String operation) {
+		return separatorSpecified(operation) ? new String[] { between(operation, SEPARATOR_START, SEPARATOR_STOP) }
+				: SEPARATORS;
 	}
 
 	private String getSumString(String operation) {
@@ -30,32 +40,8 @@ public class StringCalculator {
 		return sum;
 	}
 
-	private String[] getSeparators(String operation) {
-		if (separatorSpecified(operation)) {
-			return new String[] { between(operation, SEPARATOR_START, SEPARATOR_STOP) };
-		} else {
-			return SEPARATORS;
-		}
-	}
-
 	private boolean separatorSpecified(String string) {
 		return string.startsWith(SEPARATOR_START);
-	}
-
-	private String after(String string, String separator) {
-		return after(string, string.indexOf(separator));
-	}
-
-	private String after(String string, int index) {
-		return string.substring(index + 1);
-	}
-
-	private String before(String string, int index) {
-		return string.substring(0, index);
-	}
-
-	private String between(String string, String start, String stop) {
-		return string.substring(string.indexOf(start) + start.length(), string.indexOf(stop));
 	}
 
 	private boolean separatorFound(int separatorIndex) {
@@ -71,10 +57,6 @@ public class StringCalculator {
 			}
 		}
 		return separatorIndex;
-	}
-
-	private static int asInt(String number) {
-		return number.isEmpty() ? 0 : Integer.parseInt(number);
 	}
 
 }
