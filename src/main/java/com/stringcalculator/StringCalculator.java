@@ -32,6 +32,9 @@ public class StringCalculator {
 	private int add(String sumString, String[] separators) {
 		int separatorIndex = nextSeparatorIndex(sumString, separators);
 		int sum = asInt(before(sumString, separatorIndex));
+		if (sum < 0) {
+			throw new NegativeNotAllowedException();
+		}
 
 		if (separatorIndex < sumString.length()) {
 			sum += add(after(sumString, separatorIndex), separators);

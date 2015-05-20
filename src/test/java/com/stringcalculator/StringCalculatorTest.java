@@ -1,6 +1,7 @@
 package com.stringcalculator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,5 +43,15 @@ public class StringCalculatorTest {
 	@Test
 	public void should_return_sum_when_defined_separator() {
 		assertEquals(6, calculator.add("//;\n1;2;3"));
+	}
+
+	@Test
+	public void should_throw_an_error_when_sum_negative_numbers() {
+		try {
+			calculator.add("1,-2,3");
+			fail();
+		} catch (NegativeNotAllowedException e) {
+			assertEquals("Negatives not allowed", e.getMessage());
+		}
 	}
 }
