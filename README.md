@@ -6,8 +6,7 @@ The following is a TDD Kata- an exercise in coding, refactoring and test-first, 
 Before you start: 
 - Try not to read ahead.
 - Do one task at a time. The trick is to learn to work incrementally.
-- Make sure you only test for correct inputs. there is no need to test for invalid inputs for this kata
-
+- Make sure you only test for correct inputs. there is no need to test for invalid inputs for this kata.
 
 1. Create a simple String calculator with a method int Add(string numbers)
  1. The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0) for example “” or “1” or “1,2”
