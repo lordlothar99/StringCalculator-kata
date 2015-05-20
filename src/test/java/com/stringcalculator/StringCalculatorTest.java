@@ -51,7 +51,7 @@ public class StringCalculatorTest {
 			calculator.add("1,-2,3");
 			fail();
 		} catch (NegativeNotAllowedException e) {
-			assertEquals("Negatives not allowed", e.getMessage());
+			assertEquals("Negatives not allowed : -2", e.getMessage());
 		}
 	}
 }

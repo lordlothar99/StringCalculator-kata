@@ -33,7 +33,7 @@ public class StringCalculator {
 		int separatorIndex = nextSeparatorIndex(sumString, separators);
 		int sum = asInt(before(sumString, separatorIndex));
 		if (sum < 0) {
-			throw new NegativeNotAllowedException();
+			throw new NegativeNotAllowedException(sum);
 		}
 
 		if (separatorIndex < sumString.length()) {
