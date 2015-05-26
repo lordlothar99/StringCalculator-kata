@@ -46,12 +46,22 @@ public class StringCalculatorTest {
 	}
 
 	@Test
-	public void should_throw_an_error_when_sum_negative_numbers() {
+	public void should_throw_an_error_when_sum_negative_number() {
 		try {
 			calculator.add("1,-2,3");
 			fail();
 		} catch (NegativeNotAllowedException e) {
 			assertEquals("Negatives not allowed : -2", e.getMessage());
+		}
+	}
+
+	@Test
+	public void should_throw_an_error_when_sum_several_negative_numbers() {
+		try {
+			calculator.add("1,-2,-3");
+			fail();
+		} catch (NegativeNotAllowedException e) {
+			assertEquals("Negatives not allowed : -2, -3", e.getMessage());
 		}
 	}
 }
