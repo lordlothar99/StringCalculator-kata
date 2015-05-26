@@ -64,4 +64,9 @@ public class StringCalculatorTest {
 			assertEquals("Negatives not allowed : -2, -3", e.getMessage());
 		}
 	}
+
+	@Test
+	public void should_ignore_numbers_over_1000_when_sum_with_such_numbers() {
+		assertEquals(2, calculator.add("2,1001"));
+	}
 }

@@ -3,6 +3,7 @@ package com.stringcalculator;
 import static com.stringcalculator.StringCalculatorUtils.isNegative;
 import static com.stringcalculator.StringCalculatorUtils.isNotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Addition {
@@ -39,5 +40,14 @@ public class Addition {
 			}
 		}
 		return negativeNumbers;
+	}
+
+	public void ignoreNumbersOver(int limit) {
+		List<Integer> numbersCopy = new ArrayList<Integer>(numbers);
+		for (Integer number : numbersCopy) {
+			if (number > limit) {
+				numbers.remove(number);
+			}
+		}
 	}
 }
