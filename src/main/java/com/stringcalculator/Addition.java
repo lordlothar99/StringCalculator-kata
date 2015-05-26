@@ -1,49 +1,17 @@
 package com.stringcalculator;
 
-import static com.stringcalculator.StringUtils.after;
-import static com.stringcalculator.StringUtils.asInt;
-import static com.stringcalculator.StringUtils.before;
+import static com.stringcalculator.StringCalculatorUtils.isNegative;
+import static com.stringcalculator.StringCalculatorUtils.isNotEmpty;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Addition {
 
-	private final List<Integer> numbers = new ArrayList<Integer>();
+	private final List<Integer> numbers;
 
-	public Addition(String sumString, String[] separators) {
+	public Addition(List<Integer> numbers) {
 		super();
-		extractNumbers(sumString, separators);
-	}
-
-	private void extractNumbers(String sumString, String[] separators) {
-		int separatorIndex = nextSeparatorIndex(sumString, separators);
-		int number = asInt(before(sumString, separatorIndex));
-
-		numbers.add(number);
-
-		if (separatorIndex < sumString.length()) {
-			extractNumbers(after(sumString, separatorIndex), separators);
-		}
-	}
-
-	private boolean separatorFound(int separatorIndex) {
-		return separatorIndex != -1;
-	}
-
-	private int nextSeparatorIndex(String sumString, String[] separators) {
-		int separatorIndex = sumString.length();
-		for (String separator : separators) {
-			int nextSeparatorIndex = sumString.indexOf(separator);
-			if (separatorFound(nextSeparatorIndex)) {
-				separatorIndex = Math.min(separatorIndex, nextSeparatorIndex);
-			}
-		}
-		return separatorIndex;
-	}
-
-	private boolean isNegative(Integer number) {
-		return number < 0;
+		this.numbers = numbers;
 	}
 
 	public int execute() {
@@ -55,6 +23,13 @@ public class Addition {
 	}
 
 	public void assertNoNegativeNumbers() {
+		String negativeNumbers = getNegativeNumbers();
+		if (isNotEmpty(negativeNumbers)) {
+			throw new NegativeNotAllowedException(negativeNumbers);
+		}
+	}
+
+	private String getNegativeNumbers() {
 		String negativeNumbers = "";
 		String sep = "";
 		for (Integer number : numbers) {
@@ -63,13 +38,6 @@ public class Addition {
 				sep = ", ";
 			}
 		}
-
-		if (isNotEmpty(negativeNumbers)) {
-			throw new NegativeNotAllowedException(negativeNumbers);
-		}
-	}
-
-	private boolean isNotEmpty(String negativeNumbers) {
-		return !"".equals(negativeNumbers);
+		return negativeNumbers;
 	}
 }

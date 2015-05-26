@@ -1,6 +1,6 @@
 package com.stringcalculator;
 
-public class StringUtils {
+public class StringCalculatorUtils {
 
 	public static String after(String string, String separator) {
 		return after(string, string.indexOf(separator));
@@ -20,6 +20,14 @@ public class StringUtils {
 
 	public static int asInt(String number) {
 		return number.isEmpty() ? 0 : Integer.parseInt(number);
+	}
+
+	public static boolean isNotEmpty(String negativeNumbers) {
+		return !"".equals(negativeNumbers);
+	}
+
+	public static boolean isNegative(int number) {
+		return number < 0;
 	}
 
 }
