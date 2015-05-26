@@ -39,36 +39,57 @@ public class AdditionBuilder {
 	}
 
 	private String[] extractSeparators(String additionString) {
-		return separatorSpecified(additionString) ? new String[] { between(additionString, SEPARATOR_START, SEPARATOR_STOP) }
-				: SEPARATORS;
+		if (!separatorSpecified(additionString)) {
+			return SEPARATORS;
+		}
+
+		String separators = between(additionString, SEPARATOR_START, SEPARATOR_STOP);
+		separators = between(separators, "[", "]");
+		return new String[] { separators };
 	}
 
 	private List<Integer> extractNumbers(String numbersString, String[] separators) {
-		int separatorIndex = nextSeparatorIndex(numbersString, separators);
-		int number = asInt(before(numbersString, separatorIndex));
-
+		String[] split = splitOnNextSeparator(numbersString, separators);
+		int number = asInt(split[0]);
 		List<Integer> numbers = new ArrayList<Integer>();
 		numbers.add(number);
 
-		if (separatorIndex < numbersString.length()) {
-			numbers.addAll(extractNumbers(after(numbersString, separatorIndex), separators));
+		if (split[1] != null) {
+			numbers.addAll(extractNumbers(split[1], separators));
 		}
 		return numbers;
 	}
 
-	private boolean separatorFound(int separatorIndex) {
-		return separatorIndex != -1;
+	private String[] splitOnNextSeparator(String numbersString, String[] separators) {
+
+		String separator = nextSeparator(numbersString, separators);
+		String[] split = new String[2];
+		if (separator == null) {
+			split[0] = numbersString;
+			split[1] = null;
+		} else {
+			split[0] = before(numbersString, separator);
+			split[1] = after(numbersString, separator);
+		}
+
+		return split;
 	}
 
-	private int nextSeparatorIndex(String numbersString, String[] separators) {
+	private String nextSeparator(String numbersString, String[] separators) {
 		int separatorIndex = numbersString.length();
+		String nextSeparator = null;
 		for (String separator : separators) {
 			int nextSeparatorIndex = numbersString.indexOf(separator);
 			if (separatorFound(nextSeparatorIndex)) {
 				separatorIndex = Math.min(separatorIndex, nextSeparatorIndex);
+				nextSeparator = separator;
 			}
 		}
-		return separatorIndex;
+		return nextSeparator;
+	}
+
+	private boolean separatorFound(int separatorIndex) {
+		return separatorIndex != -1;
 	}
 
 }

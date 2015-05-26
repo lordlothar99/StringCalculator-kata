@@ -41,7 +41,7 @@ public class StringCalculatorTest {
 	}
 
 	@Test
-	public void should_return_sum_when_defined_separator() {
+	public void should_return_sum_when_using_specific_separator() {
 		assertEquals(6, calculator.add("//;\n1;2;3"));
 	}
 
@@ -68,5 +68,10 @@ public class StringCalculatorTest {
 	@Test
 	public void should_ignore_numbers_over_1000_when_sum_with_such_numbers() {
 		assertEquals(2, calculator.add("2,1001"));
+	}
+
+	@Test
+	public void should_return_sum_when_using_separator_with_several_characters() {
+		assertEquals(6, calculator.add("//[***]\n1***2***3"));
 	}
 }
