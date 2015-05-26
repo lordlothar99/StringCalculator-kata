@@ -25,12 +25,12 @@ public class AdditionBuilder {
 
 	private Addition buildAddition() {
 		String[] separators = extractSeparators(additionString);
-		String sumString = extractSumString(additionString);
-		List<Integer> numbers = extractNumbers(sumString, separators);
+		String numbersString = extractNumbersString(additionString);
+		List<Integer> numbers = extractNumbers(numbersString, separators);
 		return new Addition(numbers);
 	}
 
-	private String extractSumString(String additionString) {
+	private String extractNumbersString(String additionString) {
 		return separatorSpecified(additionString) ? after(additionString, SEPARATOR_STOP) : additionString;
 	}
 
@@ -38,20 +38,20 @@ public class AdditionBuilder {
 		return string.startsWith(SEPARATOR_START);
 	}
 
-	private String[] extractSeparators(String operation) {
-		return separatorSpecified(operation) ? new String[] { between(operation, SEPARATOR_START, SEPARATOR_STOP) }
+	private String[] extractSeparators(String additionString) {
+		return separatorSpecified(additionString) ? new String[] { between(additionString, SEPARATOR_START, SEPARATOR_STOP) }
 				: SEPARATORS;
 	}
 
-	private List<Integer> extractNumbers(String sumString, String[] separators) {
-		int separatorIndex = nextSeparatorIndex(sumString, separators);
-		int number = asInt(before(sumString, separatorIndex));
+	private List<Integer> extractNumbers(String numbersString, String[] separators) {
+		int separatorIndex = nextSeparatorIndex(numbersString, separators);
+		int number = asInt(before(numbersString, separatorIndex));
 
 		List<Integer> numbers = new ArrayList<Integer>();
 		numbers.add(number);
 
-		if (separatorIndex < sumString.length()) {
-			numbers.addAll(extractNumbers(after(sumString, separatorIndex), separators));
+		if (separatorIndex < numbersString.length()) {
+			numbers.addAll(extractNumbers(after(numbersString, separatorIndex), separators));
 		}
 		return numbers;
 	}
@@ -60,10 +60,10 @@ public class AdditionBuilder {
 		return separatorIndex != -1;
 	}
 
-	private int nextSeparatorIndex(String sumString, String[] separators) {
-		int separatorIndex = sumString.length();
+	private int nextSeparatorIndex(String numbersString, String[] separators) {
+		int separatorIndex = numbersString.length();
 		for (String separator : separators) {
-			int nextSeparatorIndex = sumString.indexOf(separator);
+			int nextSeparatorIndex = numbersString.indexOf(separator);
 			if (separatorFound(nextSeparatorIndex)) {
 				separatorIndex = Math.min(separatorIndex, nextSeparatorIndex);
 			}
