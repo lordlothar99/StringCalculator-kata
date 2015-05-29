@@ -10,9 +10,12 @@ import java.util.List;
 
 public class AdditionBuilder {
 
+	private static final String BRACE_CLOSE = "]";
+	private static final String BRACE_OPEN = "[";
 	private static final String SEPARATOR_STOP = "\n";
 	private static final String SEPARATOR_START = "//";
 	private static final String[] SEPARATORS = new String[] { ",", SEPARATOR_STOP };
+	private static final String UNDEFINED = null;
 	private final String additionString;
 
 	public AdditionBuilder(String additionString) {
@@ -44,7 +47,7 @@ public class AdditionBuilder {
 		}
 
 		String separators = between(additionString, SEPARATOR_START, SEPARATOR_STOP);
-		separators = between(separators, "[", "]");
+		separators = between(separators, BRACE_OPEN, BRACE_CLOSE);
 		return new String[] { separators };
 	}
 
@@ -54,7 +57,7 @@ public class AdditionBuilder {
 		List<Integer> numbers = new ArrayList<Integer>();
 		numbers.add(number);
 
-		if (split[1] != null) {
+		if (split[1] != UNDEFINED) {
 			numbers.addAll(extractNumbers(split[1], separators));
 		}
 		return numbers;
@@ -64,9 +67,9 @@ public class AdditionBuilder {
 
 		String separator = nextSeparator(numbersString, separators);
 		String[] split = new String[2];
-		if (separator == null) {
+		if (separator == UNDEFINED) {
 			split[0] = numbersString;
-			split[1] = null;
+			split[1] = UNDEFINED;
 		} else {
 			split[0] = before(numbersString, separator);
 			split[1] = after(numbersString, separator);
@@ -77,7 +80,7 @@ public class AdditionBuilder {
 
 	private String nextSeparator(String numbersString, String[] separators) {
 		int separatorIndex = numbersString.length();
-		String nextSeparator = null;
+		String nextSeparator = UNDEFINED;
 		for (String separator : separators) {
 			int nextSeparatorIndex = numbersString.indexOf(separator);
 			if (separatorFound(nextSeparatorIndex)) {
