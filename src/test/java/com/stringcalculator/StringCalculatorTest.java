@@ -1,5 +1,6 @@
 package com.stringcalculator;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -17,32 +18,32 @@ public class StringCalculatorTest {
 
 	@Test
 	public void should_return_0_when_empty_string_sent() {
-		assertEquals(0, calculator.add(""));
+		assertThat(calculator.add("")).isEqualTo(0);
 	}
 
 	@Test
 	public void should_return_input_as_an_integer_when_single_number_sent() {
-		assertEquals(9, calculator.add("9"));
+	    assertThat(calculator.add("9")).isEqualTo(9);
 	}
 
 	@Test
 	public void should_return_sum_when_two_numbers_sent() {
-		assertEquals(14, calculator.add("9,5"));
+        assertThat(calculator.add("9,5")).isEqualTo(14);
 	}
 
 	@Test
 	public void should_return_sum_when_more_than_two_numbers_sent() {
-		assertEquals(37, calculator.add("9,5,8,9,6"));
+        assertThat(calculator.add("9,5,8,9,6")).isEqualTo(37);
 	}
 
 	@Test
 	public void should_return_sum_when_new_line_separator() {
-		assertEquals(6, calculator.add("1\n2,3"));
+        assertThat(calculator.add("1\n2,3")).isEqualTo(6);
 	}
 
 	@Test
 	public void should_return_sum_when_using_specific_separator() {
-		assertEquals(6, calculator.add("//;\n1;2;3"));
+        assertThat(calculator.add("//;\n1;2;3")).isEqualTo(6);
 	}
 
 	@Test
@@ -67,11 +68,11 @@ public class StringCalculatorTest {
 
 	@Test
 	public void should_ignore_numbers_over_1000_when_sum_with_such_numbers() {
-		assertEquals(2, calculator.add("2,1001"));
+        assertThat(calculator.add("2,1001")).isEqualTo(2);
 	}
 
 	@Test
 	public void should_return_sum_when_using_separator_with_several_characters() {
-		assertEquals(6, calculator.add("//[***]\n1***2***3"));
+        assertThat(calculator.add("//[***]\n1***2***3")).isEqualTo(6);
 	}
 }
